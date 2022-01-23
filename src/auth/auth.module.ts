@@ -12,7 +12,7 @@ import { LoginValidationMiddleware } from './middleware/login-validation.middlew
     UserModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '30d' },
+      signOptions: { expiresIn: process.env.TIME_IS_EXPIRES },
     }),
   ],
   controllers: [AuthController],
