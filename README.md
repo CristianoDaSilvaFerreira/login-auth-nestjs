@@ -16,39 +16,84 @@
 </div>
 
 # Login Auth NestJs
+
+> Um Sistema de Login com autenticação feito usando o `NestJs` e para autenticação usa-se o `Token JWT - (JSON WEB TOKEN)`
+> O NestJS facilita muito a proteção de recursos em nossa API
+
+##  JSON Web Tokens
+> JWT, resumidamente, é uma string de caracteres que, caso cliente e servidor estejam sob HTTPS, permite que somente o servidor que conhece o ‘segredo’ possa validar o conteúdo do token e assim confirmar a autenticidade do cliente. O token não é “criptografado”, mas “assinado”, de forma que só com o secret essa assinatura possa ser comprovada, o que impede que atacantes “criem” tokens por conta própria.
+> Em termos práticos, quando um usuário se autentica no sistema ou web API (com usuário e senha), o servidor gera um token com data de expiração pra ele. Durante as requisições seguintes do cliente, o JWT é enviado no cabeçalho da requisição e, caso esteja válido, a API irá permitir acesso aos recursos solicitados, sem a necessidade de se autenticar novamente.
+
+![jwt](https://user-images.githubusercontent.com/68359459/150660979-154e65af-f6d3-47a7-91db-0b4915e03177.png)
+
                                                                                                                                   
- Um Sistema de Login com autenticação feito usando o `NestJs` e para autenticação usa-se o `Token JWT`
+> Poderá pode ver o schema de autenticação através do link <a href="https://miro.com/welcomeonboard/NlZFWWdnRWkxVXhzdmNRR3NxRVhRSkFFeWNScFVtVURvQzBhdHJadENjZHppRU1Zb0FtWXMxd2QwdldBZDRTR3wzNDU4NzY0NTE3MTM1Nzg5NTg1?invite_link_id=190498062630">Miro - Autenticação NestJs JWT</a>, mas desde já deixo uma previa nas imagens abaixo                                                                   
+
+ ![schemas auth](https://user-images.githubusercontent.com/68359459/150660719-ed19eaf8-d360-4199-8aa0-2b52ddc29e33.jpg)
+
+
+![schemas frontend-backend](https://user-images.githubusercontent.com/68359459/150660723-a8981cc4-d0af-45b7-95c2-7abb5d0273f0.jpg)
+
+
+![schemas local-jwt](https://user-images.githubusercontent.com/68359459/150660727-9060954a-0d28-4620-b57b-ca595d842191.jpg)
+
+
+![schemas criptografia](https://user-images.githubusercontent.com/68359459/150660732-c65624e9-cd7d-466a-9d52-fdb90572fb56.jpg)
+
+## Autenticação
+> Autenticação é você provar que você é você mesmo. Já autorização é você provar que possui permissão para fazer ou ver o que você está tentando.
+
+> Antes de gerar o JWT é necessário que o usuário passe por uma autenticação tradicional, geralmente com usuário e senha. Essa informação fornecida é validada junto a uma base de dados e somente caso ela esteja ok é que geramos o JWT para ele
+                                                                                                                         
+
                                                                                                                                   
 # Checklist
-                                                                                                                                  
-## Iniciando um projeto NestJS
-                                                                                                                                  
-Antes de iniciar, certifique-se de que você possui um projeto NestJS criado e que a CLI do NestJS está instalada no seu computador.
+
+## Clonando este repositório
 
 ```bash
+$ git clone https://github.com/CristianoDaSilvaFerreira/login-auth-nestjs.git
+```
+
+> Execute o comando `npm install` ou `yar install` para estar as depedências do `package.json`
+
+```node.js
+npm install
+```
+
+## Rotando o projeto
+```node.js
+npm run start:dev
+```
+
+## Iniciando um projeto NestJS
+                                                                                                                                  
+> Antes de iniciar, certifique-se de que você possui um projeto NestJS criado e que a CLI do NestJS está instalada no seu computador.
+
+```node.js
 nest new nome_projeto
 ```
                                                                                                                                   
-Nesse caso como gerenciador de pacotes estou usando o `npm` mas pode ficar a vontade em usar qualquer um.
+> Nesse caso como gerenciador de pacotes estou usando o `npm` mas pode ficar a vontade em usar qualquer um.
                                                                                                                                   
 ## Instalações Necessárias
 * Prisma
                                                                                                                                   
-```bash
+```node.js
 npm install -D prisma
 ```
 
-A instalação do `Prisma`com `-D` significa que estará sendo feito uma instalação para desenvolvimento.
+> A instalação do `Prisma`com `-D` significa que estará sendo feito uma instalação para desenvolvimento.
                                                                                                                                   
 * Inicializar o prisma
                                                                                                                                   
-```bash
+```node.js
 npx prisma init
 ```
                                                                                                                                   
 * Configurar o arquivo `.env`
                                                                                                                                   
-```bash
+```java
 # Configuration
 
 JWT_SECRET=""
@@ -58,9 +103,9 @@ JWT_SECRET=""
 DATABASE_URL=""
 ```
      
-* Arquivo `.env`preenchido
+* Arquivo `.env` preenchido
 
-```bash
+```java
 # Configuration
 
 JWT_SECRET="texto aleatório para proteger sua aplicação"
@@ -72,47 +117,47 @@ DATABASE_URL="file:./sqlite.db"
                                
 * Migra o Banco de Dados
                                
-```bash
+```node.js
 npx prisma migrate dev --name init
 ```           
 
-Esse comando deverá instalar a dependência `@prisma/client` no projeto.
+> Esse comando deverá instalar a dependência `@prisma/client` no projeto.
                                
 ## Criaçãp do módulo do Prisma
                                
 #### Comandos na `CLI` para criação dos arquivos
                                
-```bash
+```node.js
 nest g module prisma
 nest g service prisma                              
 ```
 
 ## Dependências
                                
-* @nestjs/passport
-* @nestjs/jwt
-* bcrypt
-* class-validator
-* class-transformer
-* passport
-* passport-jwt
-* passport-local
+- `@nestjs/passport`
+- `@nestjs/jwt`
+- `bcrypt`
+- `class-validator`
+- `class-transformer`
+- `passport`
+- `passport-jwt`
+- `passport-local`
                                
 Comando para instalar tudo ao mesmo tempo:
                                
-```bash
+```node.js
 npm i @nestjs/passport @nestjs/jwt bcrypt class-validator class-transformer passport passport-jwt passport-local
 ```
                                
 ## Dependências Dev
 
-* @types/passport-jwt
-* @types/passport-local
-* @types/bcrypt
+- `@types/passport-jwt`
+- `@types/passport-local`
+- `@types/bcrypt`
                                
-Comando para instalar tudo ao mesmo tempo:
+> Comando para instalar tudo ao mesmo tempo:
                                
-```bash
+```node.js
 npm i -D @types/passport-jwt @types/passport-local @types/bcrypt
 ```
 
@@ -120,15 +165,15 @@ npm i -D @types/passport-jwt @types/passport-local @types/bcrypt
 
 ## Usuários que será autenticados: diretório `src/user`
 
-Comando do terminal para criação dos arquivos
+> Comando do terminal para criação dos arquivos
 
-```bash
+```node.js
 nest g resource user
 ```
 
 ## Autenticação: diretório `auth`
 
-```bash
+```node.js
 nest g module auth
 nest g controller auth
 nest g service auth
@@ -136,7 +181,7 @@ nest g service auth
 
 ## Tratamento de erros: diretório `src/auth/errrs`
 
-```bash
+```node.js
 export class UnauthorizedError extends Error {}
 ```
 
@@ -144,13 +189,15 @@ export class UnauthorizedError extends Error {}
 
 ## Criação de usuário
 
-❗ Importante ❗
-Para criar um usuário, certifique-se de liberar o endpoint antes com o decorator @IsPublic().
-Caso a criação de usuários da sua aplicação seja restrita, remova o decorator IsPublic(), pois as próximas criações deverão ser autenticadas por um usuário já existente.
+> ❗ Importante ❗
+>
+> Para criar um usuário, certifique-se de liberar o endpoint antes com o decorator @IsPublic().
+>
+> Caso a criação de usuários da sua aplicação seja restrita, remova o decorator IsPublic(), pois as próximas criações deverão ser autenticadas por um usuário já existente.
 
-**Endpoint:** /user
+**Endpoint:** `/user`
 
-**Method:** POST
+**Method:** `POST`
                                
 ### Request Body:
 
@@ -173,9 +220,9 @@ Caso a criação de usuários da sua aplicação seja restrita, remova o decorat
 ```
 ## Realizando o login
 
-**Endpoint:** /login
+**Endpoint:** `/login`
 
-**Method:** POST
+**Method:** _ POST`
 
 ### Request Body:
 
